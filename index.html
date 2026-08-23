@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0f1d" />
+
+    <title>Digital Fingerprint Dashboard</title>
+    <meta name="description" content="Advanced privacy diagnostic and real-time device profiling dashboard." />
+
+    <!-- Google Fonts: Inter for UI & Fira Code for System Output -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+
+    <!-- Leaflet Maps CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"/>
+    <link rel="stylesheet" href="./src/css/style.css" />
+  </head>
+
+  <body ontouchstart="countTouches(event)" ontouchend="countTouches(event)">
+    <div class="dashboard-container">
+      
+      <!-- Top Executive Header Section -->
+      <header class="main-header">
+        <div class="brand">
+          <div class="radar-ping"></div>
+          <h1>Digital Fingerprint <span class="version-tag">v2.0</span></h1>
+        </div>
+        <div class="system-status">
+          <span class="status-indicator live"></span>
+          <p>System Monitor Active</p>
+        </div>
+      </header>
+
+      <!-- Original Retro Terminal (Styled as an interactive console section) -->
+      <section class="terminal-section">
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="window-controls">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <p class="terminal-title" id="df">root@df:~</p>
+          </div>
+          <div class="terminal-screen">
+            <div class="output">Initializing diagnostic probe...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advanced Data Grid Modules -->
+      <main class="dashboard-grid">
+        
+        <!-- Module 1: Hardware Specs -->
+        <div class="dashboard-card" id="card-hardware">
+          <div class="card-header">
+            <span class="card-icon">💻</span>
+            <h2>Hardware Architecture</h2>
+          </div>
+          <div class="card-body">
+            <div class="data-row">
+              <span class="label">Device Type:</span>
+              <span class="value" id="val-device-type">Detecting...</span>
+            </div>
+            <div class="data-row">
+              <span class="label">CPU Logical Processors:</span>
+              <span class="value font-mono" id="val-cpu">0</span>
+            </div>
+            <div class="data-row">
+              <span class="label">System RAM Capacity:</span>
+              <span class="value font-mono" id="val-ram">0 GB</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Graphics Engine (GPU):</span>
+              <span class="value font-mono text-small" id="val-gpu">Detecting...</span>
+            </div>
+            <div class="data-row">
+              <span class="label">CPU Logical Cores (Extended):</span>
+              <span class="value font-mono" id="val-cpu-cores">Detecting...</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Device Memory Class:</span>
+              <span class="value font-mono" id="val-ram-class">Detecting...</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Max Touch Points:</span>
+              <span class="value font-mono" id="val-max-touch">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 2: Browser & Software Environment -->
+        <div class="dashboard-card" id="card-software">
+          <div class="card-header">
+            <span class="card-icon">🌐</span>
+            <h2>Browser Environment</h2>
+          </div>
+          <div class="card-body">
+            <div class="data-row">
+              <span class="label">User Agent Engine:</span>
+              <span class="value" id="val-browser-name">Detecting...</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Display Workspace:</span>
+              <span class="value font-mono" id="val-screen-size">0 x 0</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Cookies Validation:</span>
+              <span class="badge" id="badge-cookies">Checking</span>
+            </div>
+            <div class="data-row">
+              <span class="label">JavaScript Heap Size:</span>
+              <span class="value font-mono" id="val-js-heap">0 MB</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Window Inner Viewport:</span>
+              <span class="value font-mono" id="val-viewport-size">0 x 0</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Preferred Color Scheme:</span>
+              <span class="value" id="val-color-scheme">Detecting...</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Primary Language Vector:</span>
+              <span class="value font-mono" id="val-browser-lang">Detecting...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 3: Network Diagnostics -->
+        <div class="dashboard-card" id="card-network">
+          <div class="card-header">
+            <span class="card-icon">⚡</span>
+            <h2>Network & Diagnostics</h2>
+          </div>
+          <div class="card-body">
+            <div class="data-row">
+              <span class="label">Connection Type:</span>
+              <span class="value font-mono" id="val-net-type">Cellular/Eth</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Network Bandwidth:</span>
+              <span class="value alert-text" id="val-net-speed">0 Mbps</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Round Trip Delay (RTT):</span>
+              <span class="value font-mono" id="val-rtt">0 ms</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Power Cell Level:</span>
+              <span class="value font-mono" id="val-battery">100%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 4: Privacy & Security Guard -->
+        <div class="dashboard-card" id="card-privacy">
+          <div class="card-header">
+            <span class="card-icon">🛡️</span>
+            <h2>Privacy Leak Assessment</h2>
+          </div>
+          <div class="card-body">
+            <div class="data-row">
+              <span class="label">Ad-Blocker Subsystem:</span>
+              <span class="badge" id="badge-adblock">Checking</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Global Do-Not-Track:</span>
+              <span class="badge" id="badge-dnt">Checking</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Canvas Fingerprint Hash:</span>
+              <span class="value font-mono text-small" id="val-canvas-hash">Generating...</span>
+            </div>
+            <div class="data-row">
+              <span class="label">Audio Context Signature:</span>
+              <span class="value font-mono text-small" id="val-audio-hash">Generating...</span>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Geolocation Integrated Map Section -->
+      <section class="map-section">
+        <div class="card-header">
+          <span class="card-icon">📍</span>
+          <h2>Spatial Telemetry & Physical Geolocation</h2>
+        </div>
+        <div id="map-container">
+          <!-- Leaflet dynamic map targeting placeholder -->
+          <div id="telemetry-map"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Leaflet Maps Script Dependency -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <!-- Your Modulated Application Scripts -->
+    <script src="./src/js/collect-data.js"></script>
+    <script src="./src/js/print-data.js"></script>
+    <script src="./src/js/default-command.js"></script>
+  </body>
+</html>
