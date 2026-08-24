@@ -22,6 +22,10 @@ The purpose of this project is to raise awareness about the risks of online priv
 
 ---
 
+## Deno
+https://privesee.vercel.app/
+
+
 ## 📂 Project Architecture
 
 ```bash
